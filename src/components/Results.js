@@ -8,19 +8,18 @@ let qs = null
 /**
  *  async result loading/listing using getMovies or getTopMovies
  **/ 
-export const Results = ({ listItems, setListItems, queryString }) => {
-	const [page, setPage] = useState(1);
+export const Results = ({ listItems, setListItems, page, setPage, queryString }) => {
+	
 	const [isFetching, setIsFetching] = useState(false);
-
 	const loadMovies = (page) => {
 		return queryString ? getMovies(queryString, page) : getTopMovies(page)
 	}
-	
 	const fetchMore = () => {
 		loadMovies(page).then(data => {
 			setListItems(prevState => ([...prevState, ...data.results]));
-			setIsFetching(false);
+			
 		})
+		setIsFetching(false);
 	}
 
 	if(qs !== queryString){
@@ -42,7 +41,7 @@ export const Results = ({ listItems, setListItems, queryString }) => {
 	});
 
 	const handleScroll = (e) => {
-		if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight){
+		if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight && !isFetching){
 			setPage(page + 1);
 			setIsFetching(true);
 		}

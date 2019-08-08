@@ -7,14 +7,20 @@ import { Route } from 'react-router-dom'
 function App() {
   const [query, setQuery] = useState('')
   const [listItems, setListItems] = useState([]);
-  
+  const [page, setPage] = useState(1);
+
   return (
    
     <Fragment>
       <GlobalStyle />
       <Main>
         <Route render={(props) => <Search {...props} setValue={setQuery} />} />
-        <Route exact path="/" render={(props) => <Results {...props} listItems={listItems} setListItems={setListItems} queryString={query} />} />
+        <Route exact path="/" render={(props) => <Results {...props} 
+               listItems={listItems}
+               setListItems={setListItems} 
+               page={page}
+               setPage={setPage}
+               queryString={query} />} />
         <Route path="/id/:id/:trailer?" component={Details}/>
       </Main>
     </Fragment>
