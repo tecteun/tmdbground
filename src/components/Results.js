@@ -8,14 +8,14 @@ let qs = null
 /**
  *  async result loading/listing using getMovies or getTopMovies
  **/ 
-export const Results = ({ queryString }) => {
-	const [listItems, setListItems] = useState([]);
+export const Results = ({ listItems, setListItems, queryString }) => {
 	const [page, setPage] = useState(1);
-	const [isFetching, setIsFetching] = useState(true);
-	
+	const [isFetching, setIsFetching] = useState(false);
+
 	const loadMovies = (page) => {
 		return queryString ? getMovies(queryString, page) : getTopMovies(page)
 	}
+	
 	const fetchMore = () => {
 		loadMovies(page).then(data => {
 			setListItems(prevState => ([...prevState, ...data.results]));
